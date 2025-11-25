@@ -91,6 +91,7 @@ export const WheelSpinner = ({ names, isSpinning, selectedName, selectedIndex }:
         }}
       >
         {names.map((name, index) => {
+
           const centerAngleDeg = index * segmentAngle + segmentAngle / 2;
 
           const centerAngleRad = (centerAngleDeg - 90) * (Math.PI / 180);
@@ -100,9 +101,10 @@ export const WheelSpinner = ({ names, isSpinning, selectedName, selectedIndex }:
 
           let textRotation;
           if (names.length === 2) {
-            textRotation = index === 0 ? 180 : 0;
+            textRotation = index === 0 ? 0 : 180;
           } else {
-            textRotation = centerAngleDeg + 90;
+            // rotate 180° relative ao ângulo anterior para inverter o sentido do texto
+            textRotation = centerAngleDeg - 90;
           }
 
           return (
