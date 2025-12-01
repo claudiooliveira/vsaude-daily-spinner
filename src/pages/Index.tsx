@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { WheelSpinner } from "@/components/WheelSpinner";
@@ -15,6 +15,9 @@ const Index = () => {
   const [drawnNames, setDrawnNames] = useState<string[]>([]);
   const [allNames, setAllNames] = useState<string[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const audio = new Audio("/vsaude-daily-spinner/bell.mp3");
 
   useEffect(() => {
     const savedNames = localStorage.getItem("dailyNames");
@@ -24,6 +27,16 @@ const Index = () => {
       setAllNames(parsed);
     }
   }, []);
+
+  useEffect(() => {
+    if (showResult && selectedName) {
+      audioRef.current = audio;
+      audio.volume = 0.5;
+      audio.play().catch((error) => {
+        console.error("Erro ao tocar áudio:", error);
+      });
+    }
+  }, [showResult, selectedName]);
 
   const saveNames = () => {
     localStorage.setItem("dailyNames", JSON.stringify(names));
@@ -100,7 +113,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-4 relative">
       {/* Imagem no canto superior esquerdo */}
       <img
-        src="/christmas_header.png"
+        src="/vsaude-daily-spinner/christmas_header.png"
         alt="Christmas Header"
         className="fixed top-0 left-0 z-40 pointer-events-none"
         style={{ maxHeight: "150px" }}
@@ -108,7 +121,7 @@ const Index = () => {
       
       {/* Imagem no canto superior direito (invertida) */}
       <img
-        src="/christmas_header.png"
+        src="/vsaude-daily-spinner/christmas_header.png"
         alt="Christmas Header"
         className="fixed top-0 right-0 z-40 pointer-events-none"
         style={{ maxHeight: "150px", transform: "scaleX(-1)" }}
