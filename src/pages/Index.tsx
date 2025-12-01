@@ -97,7 +97,23 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-4 relative">
+      {/* Imagem no canto superior esquerdo */}
+      <img
+        src="/christmas_header.png"
+        alt="Christmas Header"
+        className="fixed top-0 left-0 z-40 pointer-events-none"
+        style={{ maxHeight: "150px" }}
+      />
+      
+      {/* Imagem no canto superior direito (invertida) */}
+      <img
+        src="/christmas_header.png"
+        alt="Christmas Header"
+        className="fixed top-0 right-0 z-40 pointer-events-none"
+        style={{ maxHeight: "150px", transform: "scaleX(-1)" }}
+      />
+      
       <div className="w-full max-w-4xl space-y-8">
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-bold text-secondary">Roleta da Daily</h1>
